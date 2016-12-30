@@ -30,14 +30,13 @@ public class Route53Updater extends TimerTask {
 
     public void run(){
         try {
-            Thread.sleep(config.getCheckInterval());
+            BufferedReader bufferedReader = new BufferedReader(
+                    new InputStreamReader(
+                            new URL(config.getIpResolutionHost()).openStream()
+                    )
+            );
 
-            String currentIP =
-                    new BufferedReader(
-                            new InputStreamReader(
-                                    new URL(config.getIpResolutionHost()).openStream()
-                            )
-                    ).readLine();
+            String currentIP = bufferedReader.readLine();
 
             String recordedIP = route53Helper
                     .getRecordSet()
@@ -49,7 +48,9 @@ public class Route53Updater extends TimerTask {
                 route53Helper.updateRecordSet(currentIP);
                 log.info("Route53 updated with " + currentIP);
             }
-            else log.info("Route53 is up to date");
+            else {
+                log.info("Route53 is up to date");
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

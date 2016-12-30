@@ -2,7 +2,7 @@ package org.keeys.dyndns.config;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class Config{
+public class Config {
 
     private String ipResolutionHost;
     private Long checkInterval;
@@ -23,7 +23,7 @@ public class Config{
             String route53RecordName,
             String route53RecordType,
             Long route53RecordTTL
-    ){
+    ) {
         this.ipResolutionHost = checkNotNull(ipResolutionHost);
         this.checkInterval = checkNotNull(checkInterval);
         this.route53Key = checkNotNull(route53Key);
@@ -34,7 +34,7 @@ public class Config{
         this.route53RecordTTL = checkNotNull(route53RecordTTL);
     }
 
-    public static Config create(){
+    public static Config create() {
         return new Config(
             System.getenv("IP_RESOLUTION_HOST"),
             Long.parseLong(System.getenv("CHECK_INTERVAL")),
